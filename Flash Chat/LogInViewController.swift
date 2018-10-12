@@ -17,7 +17,7 @@ class LogInViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        // login(email: "skpulipaka@gmail.com", password: "saikrishna")
     }
     
     override func didReceiveMemoryWarning() {
@@ -33,8 +33,11 @@ class LogInViewController: UIViewController {
         guard email != nil, email != "", password != nil, password != "" else {
             return
         }
-        
-        Auth.auth().signIn(withEmail: email!, password: password!) { (authData, error) in
+        login(email: email!, password: password!)
+    }
+    
+    func login(email: String, password: String) {
+        Auth.auth().signIn(withEmail: email, password: password) { (authData, error) in
             guard let user = authData else {
                 print("login failed")
                 return
@@ -43,8 +46,5 @@ class LogInViewController: UIViewController {
             self.performSegue(withIdentifier: "goToChat", sender: self)
         }
     }
-    
-    
-    
     
 }  
