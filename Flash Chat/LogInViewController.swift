@@ -6,10 +6,11 @@
 
 
 import UIKit
+import Firebase
 
 
 class LogInViewController: UIViewController {
-
+    
     //Textfields pre-linked with IBOutlets
     @IBOutlet var emailTextfield: UITextField!
     @IBOutlet var passwordTextfield: UITextField!
@@ -18,21 +19,32 @@ class LogInViewController: UIViewController {
         super.viewDidLoad()
         
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
-
-   
+    
+    
     @IBAction func logInPressed(_ sender: AnyObject) {
-
         
-        //TODO: Log in the user
+        let email = emailTextfield.text
+        let password = passwordTextfield.text
         
+        guard email != nil, email != "", password != nil, password != "" else {
+            return
+        }
         
+        Auth.auth().signIn(withEmail: email!, password: password!) { (authData, error) in
+            guard let user = authData else {
+                print("login failed")
+                return
+            }
+            print(user)
+            self.performSegue(withIdentifier: "goToChat", sender: self)
+        }
     }
     
-
-
+    
+    
     
 }  
